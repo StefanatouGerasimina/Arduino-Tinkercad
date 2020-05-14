@@ -1,0 +1,150 @@
+/*-----------------------------------------------------
+'     
+'     TRIG --> Pin 10
+'     ECHO --> Pin 11
+'   
+'-----------------------------------------------------*/
+//code for https://www.tinkercad.com/things/eCgXZROMpRm-polar/editel
+
+//pin Ultrasonik
+#define trigPin 10
+#define echoPin 11
+#include <LiquidCrystal.h>
+#define ledAman 2
+#define led1 3
+#define led2 4
+#define led3 5
+#define led4 6
+#define led5 7
+#define led6 8
+#define led7 9
+
+const int RS = 13 ,DB0 =2 , DB1=3, DB2=4, DB3=5, DB4=6, DB5=7, DB6=8, DB7=9;  ;
+const int E = 12;
+LiquidCrystal lcd(RS, E, DB0, DB1, DB2, DB3, DB4, DB5, DB6, DB7);
+
+
+
+
+void setup() {
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+ 
+  pinMode(ledAman, OUTPUT);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led4, OUTPUT);
+  pinMode(led5, OUTPUT);
+  pinMode(led6, OUTPUT);
+  pinMode(led7, OUTPUT); 
+  
+  lcd.begin(16,2);
+  lcd.print("Distance Sensor");
+  
+}
+
+void loop() {
+  long duration, distance;
+  digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+ 
+  lcd.setCursor(0,1);
+  lcd.print(distance);
+  lcd.print(" cm");
+  
+if (distance >= 320) 
+  { 
+    digitalWrite(ledAman, HIGH);
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3,LOW);
+  }
+  else {
+    digitalWrite(ledAman,LOW);
+  }
+  
+  if (distance < 100 && distance > 60) 
+  {
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    digitalWrite(led7,HIGH);
+ 
+  }
+  
+  if (distance < 140 && distance > 100) {
+    digitalWrite(led2,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,HIGH);
+    digitalWrite(led7,LOW);
+    
+  } 
+  
+  
+  if (distance < 180 && distance > 140) {
+    digitalWrite(led3,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,HIGH);
+    digitalWrite(led6,LOW);
+    digitalWrite(led7,LOW);
+    
+  } 
+  if (distance < 220 && distance > 180) {
+    digitalWrite(led4,HIGH);
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    digitalWrite(led7,LOW);
+    
+  } 
+  if (distance < 240 && distance > 220) {
+    digitalWrite(led5,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led3,HIGH);
+    digitalWrite(led6,LOW);
+    digitalWrite(led7,LOW);
+    
+  } 
+    
+  if (distance < 280 && distance > 240) {
+    digitalWrite(led6,LOW);
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,HIGH);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led7,LOW);
+    
+  } 
+  if (distance < 320 && distance > 280) {
+    digitalWrite(led7,LOW);
+    digitalWrite(led1,HIGH);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(led5,LOW);
+    digitalWrite(led6,LOW);
+    digitalWrite(led3,LOW);
+    
+  } 
+
+
+ 
+  delay(500);
+}
